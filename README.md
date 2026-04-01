@@ -1,18 +1,34 @@
 Unity Object Pooling Framework
 
-1. 소개 : 재사용이 빈번한 오브젝트들을 관리하는 과정에서, 반복되는 Instantiate과 Destory를 줄여 성능적 개선을 이루기 위해 사용하는 최적화 방법
-
-2. 설치 방법 : 유니티 프로젝트창에 해당 파일들을 복사
+1. 소개 :
+   재사용이 빈번한 오브젝트를 관리할때 반복적으로 발생하는 Instantiate()과 Destroy() 호출을 줄여 성능을 개선하기 위한 Unity 오브젝트 풀링 프레임워크.
+   
+2. 설치 방법 :
+   프로젝트의 Assets 폴더에 해당 스크립트들을 복사하여 사용.
 
 3. 파일 별 설명 :
+   IPoolable.cs : 풀링되는 오브젝트의 생명주기를 정의하는 인터페이스. (OnSpawn(), OnDespawn())
+   Poolable.cs : 오브젝트가 자신을 Pool로 반환할 수 있도록 연결해주는 컴포넌트
+   ObjectPool.cs : 실제 오브젝트를 생성하고, Queue로 보관, 재사용하는 풀 로직
+   PoolConfig.cs : 풀링할 Prefab과 초기 사이즈, 확장 여부를 정의하는 ScritpableObject
+   PoolManager.cs : 여러 ObjcetPool을 관리하는 중앙 관리자 (Singleton)
    
 
-5. 사용 방법 :
-   - 오브젝트들이 생성되고 삭제될 씬에 PoolManager 오브젝트를 만들어, PoolManager.cs 컴포넌트를 추가해준다
-   - 생성되고 삭제될 오브젝트에, IPoolable 인터페이스를 상속받고, OnSpawn(), OnDespawn()을 구현해준다. 동일 오브젝트에 Poolable.cs 컴포넌트를 추가해준다
-   - PoolConfig Scriptable Object를 생성하여 윗줄의 오브젝트 Prefab을 적용하고, initialSize와 expandable 여부를 설정한다
-   - 생성된 PoolConfig SO를 맨 윗줄에서 설명한 PoolManager inspector에서 추가해준다.
+4. 사용 방법 :
+   - 오브젝트가 생성/반환될 씬에 PoolManager(EmptyObject) 오브젝트를 생성하고 PoolManager.cs를 추가.
+   - 풀링할 오브젝트에 IPoolable 인터페이스를 상속받고, OnSpawn(), OnDespawn()을 정의하고(재생성 및 반환될때 처리해줘야할것들), 동일 오브젝트에 Poolable.cs 컴포넌트를 추가.
+   - PoolConfig ScriptableObject를 생성하여, 위 줄의 오브젝트 Prefab, initialSize, expandable 옵션을 설정.
+   - 생성한 PoolConfig를 PoolManager의 Inspector에 등록.
   
+5. 사용 예시 :
+   오브젝트 생성 (Instantiate 대신) 예시 코드 :
+   GameObject bullet = PoolManager.Instance.Get(bulletPrefab);
+   bullet.transform.position = firePoint.position;
+   bullet.transform.rotation = firePoint.rotation;
+
+   오브젝트 반환 (Destroy 대신) 예시 코드 :
+   PoolManager.Instance.Return(bullet);
+
 6. 주의 사항 :
-   해당 프레임워크는 여러씬에 거쳐 관리되는 DDOL이 아니다. 따라서 각 씬에서 사용될 오브젝트들에 대해 3번의 사용방법을 적용시켜줘야한다.
-   이렇게 한 이유는, 여러씬에서 각기 다른 오브젝트들이 사용될텐데, 그렇게 된다면, 게임 내 사용되는 모든 오브젝트들에 대해 해당 내용을 적용시키는건 데이터 낭비라고 생각했기 때문이다. 
+   이 프레임워크는 DontDestoryOnLoad 기반으로 동작하지 않습니다. 각 씬마다 필요한 오브젝트 풀을 개별적으로 구성해야합니다. 즉, 각씬에 PoolManager를 두고 관리해야합니다.
+   이렇게 설계한 이유는 모든 씬에서 사용되지 않는 오브젝트까지 미리 풀링하는 것을 방지하여, 불필요한 메모리 사용을 줄이기 위한 이유입니다.
