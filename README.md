@@ -27,9 +27,17 @@ Unity Object Pooling Framework
    1. 오브젝트가 생성/반환될 씬에 PoolManager(EmptyObject) 오브젝트를 생성하고 PoolManager.cs를 추가.
       <img width="886" height="470" alt="EmptyPoolManager" src="https://github.com/user-attachments/assets/aff7a660-2177-4829-91e1-1c5b325e665a" />
 
-   - 풀링할 오브젝트에 IPoolable 인터페이스를 상속받고, OnSpawn(), OnDespawn()을 정의하고(재생성 및 반환될때 처리해줘야할것들), 동일 오브젝트에 Poolable.cs 컴포넌트를 추가.
-   - PoolConfig ScriptableObject를 생성하여, 위 줄의 오브젝트 Prefab, initialSize, expandable 옵션을 설정.
-   - 생성한 PoolConfig를 PoolManager의 Inspector에 등록.
+   2. 풀링할 오브젝트에 IPoolable 인터페이스를 상속받고, OnSpawn(), OnDespawn()을 정의하고(재생성 및 반환될때 처리해줘야할것들), 동일 오브젝트에 Poolable.cs 컴포넌트를 추가.
+      <img width="572" height="396" alt="ExScript" src="https://github.com/user-attachments/assets/21a89549-6f1e-4a6c-88e4-7efcb7edfe31" />
+      <img width="463" height="674" alt="addcomponent" src="https://github.com/user-attachments/assets/b6a18419-6482-4aa4-af8a-36538da656bc" />
+
+   3. PoolConfig ScriptableObject를 생성하여, 위 줄의 오브젝트 Prefab, initialSize, expandable 옵션을 설정.
+      <img width="1087" height="1024" alt="Create" src="https://github.com/user-attachments/assets/073e5319-6129-4603-9177-5c87727ef138" />
+      <img width="464" height="324" alt="Config" src="https://github.com/user-attachments/assets/20d330f7-2a0e-466f-bf2b-ef9445ae5543" />
+
+   4. 생성한 PoolConfig를 PoolManager의 Inspector에 등록.
+      <img width="889" height="801" alt="PoolManager" src="https://github.com/user-attachments/assets/c3f0146e-8f1f-4a5f-be40-781ed3d65502" />
+
 
 
   
