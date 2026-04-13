@@ -24,7 +24,9 @@ Unity Object Pooling Framework
 
 4. 사용 방법 :
    
-   - 오브젝트가 생성/반환될 씬에 PoolManager(EmptyObject) 오브젝트를 생성하고 PoolManager.cs를 추가.
+   1. 오브젝트가 생성/반환될 씬에 PoolManager(EmptyObject) 오브젝트를 생성하고 PoolManager.cs를 추가.
+      <img width="886" height="470" alt="EmptyPoolManager" src="https://github.com/user-attachments/assets/aff7a660-2177-4829-91e1-1c5b325e665a" />
+
    - 풀링할 오브젝트에 IPoolable 인터페이스를 상속받고, OnSpawn(), OnDespawn()을 정의하고(재생성 및 반환될때 처리해줘야할것들), 동일 오브젝트에 Poolable.cs 컴포넌트를 추가.
    - PoolConfig ScriptableObject를 생성하여, 위 줄의 오브젝트 Prefab, initialSize, expandable 옵션을 설정.
    - 생성한 PoolConfig를 PoolManager의 Inspector에 등록.
