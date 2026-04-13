@@ -38,7 +38,8 @@ PoolConfig ScriptableObject를 생성하여 Prefab, initialSize, expandable 옵�
 
 ### **4. 매니저 등록**
 생성한 PoolConfig를 PoolManager의 Inspector에 등록합니다.  
-<img width="400" height="600" alt="PoolManager" src="https://github.com/user-attachments/assets/c3f0146e-8f1f-4a5f-be40-781ed3d65502" />
+<img width="400" height="600" alt="PoolManager" src="https://github.com/user-attachments/assets/8c628fae-1796-41f6-acb6-5237a3b1ee5c" />
+
 
 ---
 
